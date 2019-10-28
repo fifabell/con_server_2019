@@ -1,0 +1,140 @@
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>WhoRU</title>
+    </head>
+    <body>
+        <?
+            echo date("Y-m-d h:i:s")."<br>";
+            // echo "hello";
+            // ubuntu 아파치설정: https://jbit.bufs.ac.kr/~nicebam/?p=92 
+            // 디렉토리 리스팅 차단: https://kugancity.tistory.com/entry/%EC%95%84%ED%8C%8C%EC%B9%98-%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EB%A6%AC%EC%8A%A4%ED%8C%85-%EB%A7%89%EA%B8%B0  apache2
+            // 우분투 방화벽: https://milkye.tistory.com/343
+            // 파일 권한 설정: https://eunguru.tistory.com/93
+            // 보안서 설정 https: https://interconnection.tistory.com/21 
+            // https://tech.cloud.nongshim.co.kr/2018/10/16/    %EC%B4%88%EB%B3%B4%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-aws-%EC%9B%B9%EA%B5%AC%EC%B6%95-7-elb-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91/
+            // git uploading : https://codevkr.tistory.com/46?category=741030
+            // 내 git으로 이동하기 : https://github.com/fifabell/ubuntu_web_server
+            // 리눅스 권한설명 : https://conory.com/blog/19194 
+            // 그누보드 설치과정 에러(1819 : Your password does not satisfy the current policy requirements error file : /g5/install/install_db.php) : https://studyforus.com/tipnknowhow/509373
+            // apache2 재설치 : https://rockball.tistory.com/entry/Ubuntu-Apache2-%EC%9E%AC%EC%84%A4%EC%B9%98-%EB%B0%A9%EB%B2%95#recentEntries
+            // php 재설치 : https://www.manualfactory.net/10184
+            // apt-get 명령어 집합 : https://blog.outsider.ne.kr/346
+            // - html, php 확장자가 사용 가능하도록 변경
+
+            // 소스막기 : https://m.blog.naver.com/playse444/150128483824
+            // 웹 서버의 모듈을 활성화하는 명령은 a2enmod입니다. 
+            // 아파치 웹 서버 모듈을 해제하는 명령은 a2dismod입니다.
+
+            // PHP $_SERVER['PHP_SELF']보안=> 대체::  $_SERVER['SCRIPT_NAME'] : https://pjongy.tistory.com/150
+
+            // db시간설정 : https://altongmon.tistory.com/656
+
+            // php 안될때 
+            // sudo vi /etc/apache2/mods-enabled/mime.conf
+            // 파일에서 AddType application/x-bzip2 .bz2 밑에
+            // AddType application/x-httpd-php .php .phtml .html .htm 등록
+            // :wq! 하여 저장하고 나옴
+            // sudo /etc/init.d/apache2 restart
+            
+            // phpmyadmin : http://fifabell.com/phpmyadmin/index.php
+            // certbot 이용해서 ssl 갱신 : https://devlog.jwgo.kr/2019/04/16/how-to-lets-encrypt-ssl-renew/
+
+            // 리눅스 명령어(ubuntu)
+            // 패키지 확인 dpkg --get-selections
+
+            // 설치 솔루션 https://webnautes.tistory.com/1185
+            // 진행도 sudo apt-get upgrade , update
+            // 이후 ~ 
+
+            // let's encrypt ssl : https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-18-04
+            // https://blog.lael.be/post/5107
+        //     63  cd /etc/letsencrypt/live/fifabell.com/
+        //     64  ll
+        //     65  vi /etc/apache2/apache2.conf
+        //     66  grep -r 'fifabell' /etc/apache2/
+        //     67  vi /etc/apache2/apache2.conf
+        //     68  grep -r '/var/www/html' /etc/apache2/
+        //     69  vi /etc/apache2/sites-available/default-ssl.conf
+        //     70  ll
+        //     71  vi /etc/apache2/sites-available/default-ssl.conf
+        //     72  service apache2 restart
+        //     73  vi /etc/apache2/sites-available/default-ssl.conf
+        //     74  service apache2 restart
+        //     75  vi /etc/apache2/sites-available/000-default.conf
+        //     76  vi /etc/apache2/sites-available/default-ssl.conf
+        //     77  ll
+        //     78  vi /etc/apache2/sites-available/default-ssl.conf
+        //     79  service apache2 restart
+        //     80  vi /etc/apache2/sites-available/default-ssl.conf
+        //     81  grep -r 'mod_ssl.c' /etc/apache2/
+        //     82  grep -r 'mod_ssl' /etc/apache2/
+        //     83  vi /etc/apache2/mods-available/ssl.load
+        //     84  grep -r 'mods-available' /etc/apache2/
+        //     85  vi /etc/apache2/sites-available/default-ssl.conf
+        //     86  grep -r 'LoadModule' /etc/apache2/
+        //     87  grep -r 'virturehost' /etc/apache2/
+        //     88  grep -r 'vhost' /etc/apache2/
+        //     89  vi /etc/apache2/mods-available/vhost_alias.load
+        //     90  sudo ufw status
+        //     91  vi /etc/apache2/sites-available/default-ssl.conf
+        //     92  vi /etc/apache2/
+        //     93  vi /etc/apache2.conf
+        //     94  vi /etc/apache2/apache2.conf
+        //     95  vi /etc/apache2/ports.conf
+        //     96  service apache2 restart
+        //     97*
+        //     98  vi /etc/apache2/ports.conf
+        //     99  service apache2 restart
+        //    100  vi /etc/apache2/apache2.conf
+        //    101  vi /etc/apache2/sites-available/
+        //    102  cd /etc/apache2/sites-available/
+        //    103  ls
+        //    104  vi default-ssl.conf
+        //    105  sudo apt install python-certbot-apache
+        //    106  nano /etc/apache2/sites-available/fifabell.com.conf
+        //    107  nano /etc/apache2/sites-available/.fifabell.com.conf.swp
+        //    108  nano /etc/apache2/sites-available/default-ssl.conf
+        //    109  vi /etc/apache2/sites-available/default-ssl.conf
+        //    110  nano /etc/apache2/sites-available/default-ssl.conf
+        //    111  apache2ctl configtest
+        //    112  systemctl reload apache2
+        //    113  certbot --apache -d fifabell.com
+        //    114  certbot renew --dry-run
+        //    115  service apache2 restart
+        //    116  history
+
+        // 변수 안먹힐 때 팁
+        // $limit1;
+        // $limit2;
+        // $limit3;
+        // $limit4;
+        // $limit5;
+        // $limit6;
+
+        // for ($i=1; $i <7 ; $i++) { 
+        //     # code...
+        //     echo $limit${i};
+        // }
+         
+        ?>
+        
+        <header>
+            <!-- 인증단계 -->
+        </header>
+        <section>
+            <?php
+                $hostname = $_SERVER["HTTP_HOST"];
+                echo $hostname;
+            ?>    
+            
+        </section>
+    <!-- linux명령어
+    아파치2 재시작 == sudo /etc/init.d/apache2 restart 
+    -->
+    </body>
+    <?php echo (" <meta http-equiv=\"Refresh\" content=\"0; URL=https://$hostname/main/main.html\"> "); ?>
+    
+</html>

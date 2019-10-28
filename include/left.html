@@ -1,0 +1,104 @@
+<a href="javascript:nav_btn_open_function();" id="nav_btn_open">
+    <img src="../img/menu_white.png" alt="nav_btn_open">
+</a>
+<div id="left">
+    <a href="javascript:nav_btn_off_function();" id="nav_btn_off">
+        <img src="../img/close_white.png" alt="nav_btn_off">
+    </a>
+    <ul id="con_ul">
+        <li>
+            <a href="/main/main.html">Inc</a>
+        </li>
+        <!-- end section1 -->
+        
+        <li>
+            <a href="javascript:;">Study</a>
+            <ul style="display: none;" class="one_tab">
+                <li>
+                    <ul>
+                        <p>Server</p>
+                        <ul class="two_tab">
+                            <li class="aws"><a href="../board/list.html?type=aws">AWS</a></li>
+                            <li class="ubuntu"><a href="../board/list.html?type=ubuntu">Ubuntu</a></li>
+                        </ul>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <p>Backend</p>
+                        <ul class="two_tab">
+                            <li class="php"><a href="../board/list.html?type=php">PHP</a></li>
+                            <li class="java"><a href="../board/list.html?type=java">Java</a></li>
+                        </ul>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <p>Frontend</p>
+                        <ul class="two_tab">
+                            <li class="vue"><a href="../board/list.html?type=vue">Vue.js</a></li>
+                            <li class="javascript"><a href="../board/list.html?type=javascript">javascript</a></li>
+                            <li class="jquery"><a href="../board/list.html?type=jquery">jQuery</a></li>
+                        </ul>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li class="etc"><a href="../board/list.html?type=etc">etc</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <!-- end section2 -->
+
+        <li>
+            <a href="javascript:;">Project</a>
+            <ul style="display: none;" class="one_tab">
+                <li><a href="../board/project1.html">project1</a></li>
+                <li><a href="../board/project2.html">project2</a></li>
+            </ul>
+        </li>
+        <!-- end section3 -->
+
+        <li>
+            <a href="/test/test_main.html">Test</a>
+        </li>
+        <!-- end section4 -->
+    </ul>
+</div>
+
+<script>
+    var left_tab = {
+        init: function() {
+            this.tab01();
+            this.tab02();
+        },
+        tab01: function() {
+            var tabBtn = $("#con_ul > li > a");
+            $(tabBtn).click(function(){
+                // console.log($(this));
+                if($(this).length>0){
+                    $(this).parent().parent().find('.on').removeClass('on');
+                    $(this).addClass('on');
+                }
+                if($(".on").next("ul").css("display")==="none"){
+                    $(tabBtn).next("ul").slideUp(200);
+                    $(this).next("ul").slideDown(200);
+                } else{
+                    $(this).next("ul").slideUp(200);
+                }
+            });
+        },
+        tab02: function() {
+            <?if($type&&$type!='etc'){?>
+                $(".<?=$type?>").parent().parent().parent().parent().css("display","block");
+            <?}else if($type&&$type=='etc') {?>
+                $(".<?=$type?>").parent().parent().parent().css("display","block");
+            <?}?>
+        }
+    }
+
+    $(document).ready(function(){
+        left_tab.init();
+    });
+</script>

@@ -1,0 +1,185 @@
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <? include "../include/head.html"?>
+    </head>
+    <body>
+        <? include "../include/nav.html"; ?>
+        <?
+            if($_SESSION["SITE_USER_UID"]) {
+                $common->error("이미 로그인이 되어있습니다.","goto","/");
+            }
+        ?>
+        <div class="leftandcenter">
+            <? include "../include/left.html"; ?>
+            <div class="center">
+                <div class="overlay"></div>
+                <div style="text-align:center;">
+                    <form method="POST" action="join_ok.php" name="signform">
+                        <input type="hidden" name="formmode" value="save">
+                        <div id="login_box">
+                            <div>
+                                <label for="m_id">
+                                    아이디
+                                </label>
+                                <input type="text" id="m_id" name="mid" placeholder="ID" title="아이디" onkeypress="nospace();">
+                            </div>
+                            <div>
+                                <label for="u_pw">
+                                    비밀번호
+                                </label>
+                                <input type="password" id="u_pw" name="upw" placeholder="PASSWORD" title="비밀번호" maxlength="15" onkeyup="passwordCheck();">
+                            </div>
+                            <div>
+                                <label for="u_pw">
+                                    비밀번호 확인
+                                </label>
+                                <input type="password" id="u_pw1" name="upw1" placeholder="PASSWORD_CKECK" title="비밀번호" maxlength="15" onkeyup="passwordCheck();">
+                                <span id="pw_check" name="pw_check"></span>
+                            </div>
+                            <div>
+                                <label for="u_name">
+                                    이름
+                                </label>
+                                <input type="text" id="u_name" name="uname" placeholder="NAME" title="이름">
+                            </div>
+                        </div>
+                        <!-- <a id="submit_chk" href="javascript:;" onclick="chk_ujumin(); frmCheck();">회원가입</a> -->
+                        <a id="submit_chk" href="javascript:;" onclick="frmCheck('mid','upw','uname');">회원가입</a>
+                    </form>
+                    <?
+
+
+                        //$db_con = mysqli_connect('localhost','fifabell01','6229','db');
+                        //  if ($db_con==false) {
+                        //      echo mysqli_connect_error()."<br>";
+                        //  } else {
+                        //      echo "connect!";
+                        //  }
+                        //var_dump($db_con);
+
+                        //if($SITE_USER_ID)
+                        $query = "SELECT * FROM tb_member";
+                        // $db_result = mysqli_query($db_con,$query);
+                        // while($db_row = mysqli_fetch_array($db_result)){
+                        //     echo $db_row['mid'];
+                        // }
+
+                        //echo $query."<br>";
+                        // echo $db."<br>";
+                        $result = $db->fetch_array($query);
+                        //echo $result;
+                        $count = count($result);
+                        echo $count."<br>";
+                        for ($i=0; $i < $count; $i++) { 
+                            echo $result[$i]['mid']."<br>";
+                        }
+
+                    ?>
+                </div>
+            </div>
+        </div>
+        
+        <? include "../include/footer.html"; ?>
+        <script>
+            function frmCheck(mid,upw,uname){
+                var mmid    = document.getElementsByName(mid)[0].value;
+                var uupw    = document.getElementsByName(upw)[0].value;
+                var uuname  = document.getElementsByName(uname)[0].value;
+                var pw_check = $("#pw_check");
+                
+                if(mmid=='') {
+                    alert("아이디를 입력해주세요.");
+                    document.getElementById('m_id').focus();
+                    return signform.false();
+                }
+                if(uupw=='') {
+                    alert("비밀번호를 입력해주세요.");
+                    document.getElementById('u_pw').focus();
+                    return signform.false();
+                }
+                if(pw_check.text()=="비밀번호가 일치하지 않습니다.") {
+                    alert("비밀번호를 확인해주세요.");
+                    document.getElementById('u_pw1').focus();
+                    return signform.false();
+                }
+                if(uuname=='') {
+                    alert("이름을 입력해주세요.");
+                    document.getElementById('u_name').focus();
+                    return signform.false();
+                }
+
+                var form = document.signform;
+                form.submit();
+            }
+
+            function nospace(){
+                if(event.keyCode==32){
+                    alert("띄어쓰기는 사용 할 수 없습니다.");
+                    event.returnValue = false;
+                }
+            }
+
+            function passwordCheck() {
+                var pw1 = document.getElementById('u_pw').value;
+                var pw2 = document.getElementById('u_pw1').value;
+                var pw_check = $("#pw_check");
+
+                if(pw1 || pw2) {
+                    if(pw1 != pw2) {
+                        pw_check.html("비밀번호가 일치하지 않습니다.").css("color","red");
+                    } else {
+                        pw_check.html("비밀번호가 일치합니다.").css("color","green");
+                    }
+                } else {
+                    pw_check.html("");
+                }
+            }
+
+            function chk_ujumin(){
+                var u1=document.getElementById('ujumin1').value;
+                var u2=document.getElementById('ujumin2').value;
+                if(u1.length!=6){
+
+                alert("주민등록번호 길이가 올바르지 않습니다.");
+                document.getElementById('ujumin1').focus();
+                return signform.false();
+                }
+                if(u2.length!=7){
+                alert("주민등록번호 길이가 올바르지 않습니다.");
+                document.getElementById('ujumin2').focus();
+                return signform.false();
+                }
+                //주민번호형식 abcdef-ghijklm
+                //주민번호 검증공식 m=11-([2*a+3*b+4*c+5*d+6*e+7*f+8*g+9*h+2*i+3*j+4*k+5*l]%11)
+                var a=u1.substr(0,1);
+                var b=u1.substr(1,1);
+                var c=u1.substr(2,1);
+                var d=u1.substr(3,1);
+                var e=u1.substr(4,1);
+                var f=u1.substr(5,1);
+
+                var g=u2.substr(0,1);
+                var h=u2.substr(1,1);
+                var i=u2.substr(2,1);
+                var j=u2.substr(3,1);
+                var k=u2.substr(4,1);
+                var l=u2.substr(5,1);
+                var m=u2.substr(6,1);
+
+                var chk_m=11-(2*a+3*b+4*c+5*d+6*e+7*f+8*g+9*h+2*i+3*j+4*k+5*l)%11;
+                if(chk_m=='10'){chk_m=0;}
+                if(chk_m=='11'){chk_m=1;}
+                if(m!=chk_m){
+                alert("주민등록번호 형식이 올바르지 않습니다.");
+                document.getElementById('ujumin1').focus();
+                return signform.false();
+                }
+                return true;
+            }
+        </script>
+            
+    </body>
+</html>

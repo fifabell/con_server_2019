@@ -1,0 +1,28 @@
+<div class="nav">
+    <div>
+        <a href="/">home</a>
+        <?if(!$SITE_USER_UID) {?>
+            I don't know who U R
+            <div>
+                <a href="../member/login.html">
+                    Go to login
+                </a>
+            </div>
+            <div>
+                <a href="../member/join.html">
+                    Can U join us?
+                </a>
+            </div>
+        <?} else {?>
+            <div>
+                <span>
+                    <?=$SITE_USER_NAME?> 님 반갑습니다.
+                </span>
+                <span>
+                    <input type="hidden" id="logout_mid" value=<?=$SITE_USER_MID?>>
+                    <a href="javascript:;" id="logout">로그아웃</a>
+                </span>
+            </div>
+        <?}?>
+    </div>
+</div>

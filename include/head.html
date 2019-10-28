@@ -1,0 +1,51 @@
+<title>fifabell</title>
+<link rel="shortcut icon" href="../img/jji_logo.png" />
+<!-- vue.js -->
+<!-- 도움되는 콘솔 경고를 포함한 개발 버전 -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+
+<!-- 상용버전, 속도와 용량이 최적화됨. -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+
+<!-- bootstrap -->
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- css -->
+<link href="../css/common.css" rel="stylesheet">
+
+<!-- script -->
+<script type="text/javascript" src="../js/common.js"></script>
+<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+
+<!-- editor -->
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+
+<?
+require_once($_SERVER["DOCUMENT_ROOT"]."/include/header.php");
+$ip_addrs = getenv("REMOTE_ADDR"); //접속 아이피
+setcookie('param_ip', $ip_addrs, time()+86400, "/"); //하루 사용하는 쿠키생성
+?>
+
+
+<!-- include.js -->
+<? include "../include/js.html"; ?>
+<?
+$hostname = $_SERVER["HTTP_HOST"];
+// 파일 저장경로
+$url = $_SERVER["PHP_SELF"];
+$file_arr = explode("/",$url);
+// fifabell.com/main/main.html 일경우
+$file_path = $file_arr[sizeof($file_arr)-1]; // main.html
+$file_path_1 = $file_arr[sizeof($file_arr)-2]; // main
+?>

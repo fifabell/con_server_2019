@@ -1,0 +1,109 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <? include "../include/head.html"; ?>
+</head>
+    <body>
+        <? include "../include/nav.html"; ?>
+        <?
+            if($SITE_USER_UID) {
+                $common->error("이미 로그인 되어 있습니다.","goto","/");
+            }
+        ?>
+        <div class="leftandcenter">
+            <? include "../include/left.html"; ?>
+            <div class="center">
+                <div class="overlay"></div>
+                <div style="text-align:center;">
+                    <ul>
+                        <li><input type="text" placeholder="이메일주소" name="GetId" id="GetId" value="<?=$_COOKIE[IDSAVE]?>"></li>
+                        <li><input type="password" placeholder="비밀번호" name="GetPw" id="GetPw"></li>
+                    </ul>
+                    <span>
+                        <input type="checkbox" name="idsave" id="idsave" value="Y" <?=($_COOKIE[IDSAVE])?"checked":""?>>
+                        <label for="idsave">이메일 저장</label>
+                    </span>
+                    <span>
+                    <input type="checkbox" name="idsave2" id="idsave2" value="Y" <?=($_COOKIE[KEEPSAVE])?"checked":""?>>
+                        <label for="idsave2">30일간 로그인 상태 유지</label>
+                    </span>
+
+                    <div>
+                        <a href="javascript:;" id="loginSubmit" class="btn_login">로그인</a>
+                    </div>
+                    
+                    <ul>
+                        <!-- <li>
+                            <a href="<?=$HOME_PATH?>/member/find.html">비밀번호 찾기</a>
+                        </li> -->
+                        <li>
+                            <span>아직 가입을 하지 않으셨나요?</span>
+                            <a href="<?=$HOME_PATH?>/member/join.html">회원가입</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <? include "../include/footer.html"?>
+
+        <script>
+            $(document).ready(function(){
+                $("#loginSubmit").css("cursor","pointer");
+
+                $("#loginSubmit").click(function(){
+                    loginProcess();
+                });
+
+                $("#GetId").keydown(function(key){
+                    if(key.keyCode == 13){ // 13==enter
+                        loginProcess();
+                    }
+                });
+
+                $("#GetPw").keydown(function(key){
+                    if(key.keyCode == 13){ // 13==enter
+                        loginProcess();
+                    }
+                });
+
+                loginProcess = function(){
+                    var v1 = $('input[name="GetId"]').val();
+                    var v2 = btoa($('input[name="GetPw"]').val()); // btoa => base64로 encoding
+                    var v3 = $(":input:checkbox[name=idsave]:checked").val();
+                    var v4 = $(":input:checkbox[name=idsave2]:checked").val();
+
+                    if(!v1){
+                        alert("아이디를 입력해주세요.");
+                        $("input[name='GetId']").focus();
+                        return false;
+                    }
+
+                    if(!v2){
+                        alert("비밀번호를 입력해주세요.");
+                        $("input[name='GetPw']").focus();
+                        return false;
+                    }
+                    
+                    $.ajax({
+                        type : "POST"
+                        , url : "/INC/userlogin_ajax.php"
+                        , dataType : "JSON"
+                        , data : "mode=login&v1="+v1+"&v2="+v2+"&v3="+v3+"&v4="+v4
+                        , success : function(res){
+                            if(res.code!="0") {
+                                location.href = "/main/main.html";
+                            } else {
+                                alert("입력하신 아이디 또는 비밀번호가 잘못 되었습니다.");
+                                return false;
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+    </body>
+</html>

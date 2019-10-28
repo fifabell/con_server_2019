@@ -1,0 +1,38 @@
+<? include "../include/head.html"; ?>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    </head>
+    <body>
+        <div class="home">
+            <header id="header" style="background:#e39208;">
+                <? include "../include/nav.html"; ?>
+                <div>
+                    This is header.
+                    welcome to JJI's home
+                </div>
+            </header>
+            <!-- /header -->
+            
+            <div class="leftandcenter">
+                <div>
+                    <? include "../include/left.html"; ?>
+                </div>
+                <!-- /left -->
+        
+                <div class="center">
+                    <div class="overlay"></div>
+                    <? include "../include/center.html"; ?>
+                </div>
+                <!-- /center -->
+            </div>
+
+            <footer>
+                <? include "../include/footer.html"; ?>
+            </footer>
+            <!-- /footer -->
+        </div>
+    </body>
+</html>
