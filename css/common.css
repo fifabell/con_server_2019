@@ -27,7 +27,7 @@ table {
     width:100%;
     border: 0;
 }
-table tr:first-child {
+.topbottom_border2px {
     border-top: 2px solid #333;
     border-bottom: 2px solid #333;
 }
