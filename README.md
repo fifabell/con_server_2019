@@ -4,7 +4,7 @@ I will start new project in 2020.
 
 ---
 
-* subjects
+## subjects
   - Ubuntu20.04 in AWS
   - webFramework
   - frontend(vue.js)
